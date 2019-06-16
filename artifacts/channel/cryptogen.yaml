@@ -1,0 +1,43 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: example.com
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:
+  - Name: Org1
+    Domain: org1.example.com
+    CA:
+       Hostname: ca 
+    Template:
+      Count: 2
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
+
+
+  - Name: Org2
+    Domain: org2.example.com
+    CA:
+       Hostname: ca
+
+    Template:
+      Count: 2
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
+  
+
+  - Name: Org3
+    Domain: org3.example.com
+    CA:
+       Hostname: ca
+
+    Template:
+      Count: 2
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
