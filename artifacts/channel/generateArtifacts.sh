@@ -1,8 +1,8 @@
 #!/bin/bash
 
-GenesisOrgName = "ThreeOrgsOrdererGenesis"
-ChannelName = "mychannel"
-ChannelOrgName = "ThreeOrgsChannel"
+GenesisOrgName="ThreeOrgsOrdererGenesis"
+ChannelName="mychannel"
+ChannelOrgName="ThreeOrgsChannel"
 
 echo
 echo " ____    _____      _      ____    _____ "
