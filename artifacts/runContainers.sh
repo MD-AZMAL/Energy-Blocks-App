@@ -63,6 +63,11 @@ docker-compose -f docker-compose.yaml up -d
 res=$?
 set +x
 
+set -x
+./modifNetwork.sh
+res=$?
+set +x
+
 echo
 echo " _____   _   _   ____   "
 echo "| ____| | \ | | |  _ \  "
