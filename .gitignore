@@ -1,4 +1,4 @@
-artifacts/channel/crypto-config/
+artifacts/channel/crypto-config
 artifacts/channel/genesis.block
 artifacts/channel/mychannel.tx
 artifacts/channel/Org1MSPanchors.tx
