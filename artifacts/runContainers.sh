@@ -59,7 +59,7 @@ dkrm
 rm -rf ./fabric-client-kv-org*
 
 set -x
-docker-compose -f docker-compose.yaml up
+docker-compose -f docker-compose.yaml up -d
 res=$?
 set +x
 
