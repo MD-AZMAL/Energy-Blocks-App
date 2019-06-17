@@ -5,3 +5,4 @@ artifacts/channel/Org1MSPanchors.tx
 artifacts/channel/Org2MSPanchors.tx
 artifacts/channel/Org3MSPanchors.tx
 artifacts/network-config.yaml
+node_modules/
