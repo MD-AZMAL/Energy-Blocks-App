@@ -6,3 +6,6 @@ artifacts/channel/Org2MSPanchors.tx
 artifacts/channel/Org3MSPanchors.tx
 artifacts/network-config.yaml
 node_modules/
+fabric-client-kv-org1/
+fabric-client-kv-org2/
+fabric-client-kv-org3/
