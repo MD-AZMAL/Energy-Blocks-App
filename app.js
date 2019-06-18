@@ -17,13 +17,13 @@ require('./config.js');
 var hfc = require('fabric-client');
 
 var helper = require('./app/helper.js');
-//var createChannel = require('./app/create-channel.js');
+var createChannel = require('./app/create-channel.js');
 var join = require('./app/join-channel.js');
-//var updateAnchorPeers = require('./app/update-anchor-peers.js');
+var updateAnchorPeers = require('./app/update-anchor-peers.js');
 var install = require('./app/install-chaincode.js');
-//var instantiate = require('./app/instantiate-chaincode.js');
+var instantiate = require('./app/instantiate-chaincode.js');
 //var invoke = require('./app/invoke-transaction.js');
-//var query = require('./app/query.js');
+var query = require('./app/query.js');
 var host = process.env.HOST || hfc.getConfigSetting('host');
 var port = process.env.PORT || hfc.getConfigSetting('port');
 
@@ -115,4 +115,48 @@ app.post('/users', async function(req, res) {
 		res.json({success: false, message: response});
 	}
 
+});
+
+// Create Channel
+app.post('/channels', async function(req, res) {
+	logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');
+	logger.debug('End point : /channels');
+	var channelName = req.body.channelName;
+	var channelConfigPath = req.body.channelConfigPath;
+	logger.debug('Channel name : ' + channelName);
+	logger.debug('channelConfigPath : ' + channelConfigPath); //../artifacts/channel/mychannel.tx
+	if (!channelName) {
+		res.json(getErrorMessage('\'channelName\''));
+		return;
+	}
+	if (!channelConfigPath) {
+		res.json(getErrorMessage('\'channelConfigPath\''));
+		return;
+	}
+
+	let message = await createChannel.createChannel(channelName, channelConfigPath, req.username, req.orgname);
+	res.send(message);
+});
+
+// Join Channel
+app.post('/channels/:channelName/peers', async function(req, res) {
+	logger.info('<<<<<<<<<<<<<<<<< J O I N  C H A N N E L >>>>>>>>>>>>>>>>>');
+	var channelName = req.params.channelName;
+	var peers = req.body.peers;
+	logger.debug('channelName : ' + channelName);
+	logger.debug('peers : ' + peers);
+	logger.debug('username :' + req.username);
+	logger.debug('orgname:' + req.orgname);
+
+	if (!channelName) {
+		res.json(getErrorMessage('\'channelName\''));
+		return;
+	}
+	if (!peers || peers.length == 0) {
+		res.json(getErrorMessage('\'peers\''));
+		return;
+	}
+
+	let message =  await join.joinChannel(channelName, peers, req.username, req.orgname);
+	res.send(message);
 });
