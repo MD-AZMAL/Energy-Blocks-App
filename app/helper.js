@@ -9,6 +9,7 @@ var util = require('util');
 var hfc = require('fabric-client');
 hfc.setLogger(logger);
 
+
 async function getClientForOrg (userorg, username) {
 	logger.debug('getClientForOrg - ****** START %s %s', userorg, username)
 	let config = '-connection-profile-path';
@@ -44,23 +45,10 @@ var getRegisteredUser = async function(username, userOrg, isJson) {
 			var admins = hfc.getConfigSetting('admins');
 			let adminUserObj = await client.setUserContext({username: admins[0].username, password: admins[0].secret});
 			let caClient = client.getCertificateAuthority();
-			
-			// add new org if not present in affiliation
-			let affiliationService = caClient.newAffiliationService()
 
-			let registeredAffiliations = await affiliationService.getAll(adminUserObj)
-			
-			if(!registeredAffiliations.Result.affiliations.some(x => x.name == userOrg.toLowerCase())) {
-				let aff = userOrg.toLowerCase() + 'department1';
-				await affiliationService.create({
-					name: aff,
-					force: true
-				}, adminUserObj);
-			}
-			
 			let secret = await caClient.register({
 				enrollmentID: username,
-				affiliation: userOrg.toLowerCase() + '.department1'
+				//affiliation: userOrg.toLowerCase() + '.department1'
 			}, adminUserObj);
 			logger.debug('Successfully got the secret for user %s',username);
 			user = await client.setUserContext({username:username, password:secret});
