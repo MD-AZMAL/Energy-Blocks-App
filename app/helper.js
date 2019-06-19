@@ -10,6 +10,7 @@ var hfc = require('fabric-client');
 hfc.setLogger(logger);
 
 
+
 async function getClientForOrg (userorg, username) {
 	logger.debug('getClientForOrg - ****** START %s %s', userorg, username)
 	let config = '-connection-profile-path';
