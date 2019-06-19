@@ -32,17 +32,10 @@ echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
 
-export CAORG1=$(cd channel/crypto-config/peerOrganizations/org1.example.com/ca && ls *_sk)
-echo "Exported CAORG1 : $CAORG1"
-echo
-
-export CAORG2=$(cd channel/crypto-config/peerOrganizations/org2.example.com/ca && ls *_sk)
-echo "Exported CAORG2 : $CAORG2"
-echo
-
-export CAORG3=$(cd channel/crypto-config/peerOrganizations/org3.example.com/ca && ls *_sk)
-echo "Exported CAORG3 : $CAORG3"
-echo
+set -x
+./modifNetwork.sh
+res=$?
+set +x
 
 echo
 echo "#################################################################"
@@ -52,21 +45,18 @@ echo "#################################################################"
 set -x
 docker-compose -f docker-compose.yaml down
 res=$?
-set+x
+set +x
 
 dkcl
 dkrm
 rm -rf ./fabric-client-kv-org*
+
 
 set -x
 docker-compose -f docker-compose.yaml up -d
 res=$?
 set +x
 
-set -x
-./modifNetwork.sh
-res=$?
-set +x
 
 echo
 echo " _____   _   _   ____   "
