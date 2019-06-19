@@ -47,10 +47,10 @@ set +x
 # dkrm
 rm -rf ./fabric-client-kv-org*
 
-# set -x
-# ./modifNetwork.sh
-# res=$?
-# set +x
+set -x
+./modifNetwork.sh
+res=$?
+set +x
 
 
 set -x

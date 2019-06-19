@@ -4,11 +4,11 @@ Frequency based electricity billing on Hyperledger Fabric
 # Setup the environment
 ```
 cd artifacts/channels/
+chmod +x clearArtifacts.sh
+./clearArtifacts.sh
 chmod +x generateArtifacts.sh
 ./generateArtifacts.sh
 cd ../
-chmod +x modifNetwork.sh
-./modifNetwork.sh
 chmod +x runContainer.sh
 ./runContainer.sh
 cd ../
