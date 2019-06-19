@@ -32,24 +32,25 @@ echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
 
-set -x
-./modifNetwork.sh
-res=$?
-set +x
-
 echo
 echo "#################################################################"
 echo "##### Executing Docker command for starting the network #########"
 echo "#################################################################"
+
 
 set -x
 docker-compose -f docker-compose.yaml down
 res=$?
 set +x
 
-dkcl
-dkrm
+# dkcl
+# dkrm
 rm -rf ./fabric-client-kv-org*
+
+# set -x
+# ./modifNetwork.sh
+# res=$?
+# set +x
 
 
 set -x

@@ -7,6 +7,8 @@ cd artifacts/channels/
 chmod +x generateArtifacts.sh
 ./generateArtifacts.sh
 cd ../
+chmod +x modifNetwork.sh
+./modifNetwork.sh
 chmod +x runContainer.sh
 ./runContainer.sh
 cd ../
