@@ -37,7 +37,7 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 					{ role: { name: 'member', mspId: 'Org3MSP' }}
 			        ],
 			        policy: {
-					'2-of':[{ 'signed-by': 0 }, { 'signed-by': 1 }]
+					'2-of':[{ 'signed-by': 0 }, { 'signed-by': 2 }]
 			        }
 		        }
 		};
@@ -45,7 +45,7 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 		if (functionName)
 			request.fcn = functionName;
 
-		let results = await channel.sendInstantiateProposal(request, 120000); //instantiate takes much longer
+		let results = await channel.sendInstantiateProposal(request, 300000); //instantiate takes much longer
 
 		const proposalResponses = results[0];
 		const proposal = results[1];
