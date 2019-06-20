@@ -14,6 +14,16 @@ echo
 
 echo
 echo "##########################################################"
+echo "#####  Delete Old certificates before genetating  ########"
+echo "##########################################################"
+
+set -x
+./clearArtifacts.sh
+res=$?
+set +x
+
+echo
+echo "##########################################################"
 echo "##### Generate certificates using cryptogen tool #########"
 echo "##########################################################"
 set -x

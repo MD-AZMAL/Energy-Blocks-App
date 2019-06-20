@@ -37,20 +37,31 @@ echo "#################################################################"
 echo "##### Executing Docker command for starting the network #########"
 echo "#################################################################"
 
+# clear old
+set -x
+docker-compose -f docker-compose.yaml down
+res=$?
+set +x
+
+dkcl
+dkrm
+rm -rf ../fabric-client-kv-org*
+
+set -x
+./modifNetwork.sh
+res=$?
+set +x
+
+# clear new
 
 set -x
 docker-compose -f docker-compose.yaml down
 res=$?
 set +x
 
-# dkcl
-# dkrm
+dkcl
+dkrm
 rm -rf ./fabric-client-kv-org*
-
-set -x
-./modifNetwork.sh
-res=$?
-set +x
 
 
 set -x
