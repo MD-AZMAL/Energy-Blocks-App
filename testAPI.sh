@@ -30,7 +30,7 @@ ORG2_TOKEN=$(echo $ORG2_TOKEN | jq ".token" | sed "s/\"//g")
 echo
 echo "ORG2 token is $ORG2_TOKEN"
 echo
-echo "POST request Enroll on Org2 ..."
+echo "POST request Enroll on Org3 ..."
 echo
 ORG3_TOKEN=$(curl -s -X POST \
   http://localhost:4000/users \
