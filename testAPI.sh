@@ -8,6 +8,8 @@ echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
 
+# Enroll users in 3 ORGs
+
 echo "POST request Enroll on Org1  ..."
 echo
 ORG1_TOKEN=$(curl -s -X POST \
@@ -41,6 +43,23 @@ ORG3_TOKEN=$(echo $ORG3_TOKEN | jq ".token" | sed "s/\"//g")
 echo
 echo "ORG3 token is $ORG3_TOKEN"
 echo
+
+# create channel request
+
+echo
+echo "POST request Create channel  ..."
+echo
+curl -s -X POST \
+  http://localhost:4000/channels \
+  -H "authorization: Bearer $ORG1_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{
+	"channelName":"mychannel",
+	"channelConfigPath":"../artifacts/channel/mychannel.tx"
+}'
+echo
+echo
+sleep 5
 
 echo
 echo " _____   _   _   ____   "
