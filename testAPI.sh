@@ -39,7 +39,7 @@ ORG3_TOKEN=$(curl -s -X POST \
 echo $ORG3_TOKEN
 ORG3_TOKEN=$(echo $ORG3_TOKEN | jq ".token" | sed "s/\"//g")
 echo
-echo "ORG2 token is $ORG3_TOKEN"
+echo "ORG3 token is $ORG3_TOKEN"
 echo
 
 echo
