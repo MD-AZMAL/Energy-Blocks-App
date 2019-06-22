@@ -1,5 +1,3 @@
-CC_SRC_PATH="$PWD/artifacts/src/github.com/example_cc/node"
-
 echo
 echo " ____    _____      _      ____    _____ "
 echo "/ ___|  |_   _|    / \    |  _ \  |_   _|"
@@ -7,6 +5,11 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
+
+# variables for cc
+
+CC_SRC_PATH="$PWD/artifacts/src/github.com/example_cc/node"
+LANGUAGE="node"
 
 # Enroll users in 3 ORGs
 
@@ -59,7 +62,7 @@ curl -s -X POST \
 }'
 echo
 echo
-sleep 5
+
 
 # channel join request
 
@@ -134,6 +137,56 @@ curl -s -X POST \
   -d '{
 	"configUpdatePath":"../artifacts/channel/Org3MSPanchors.tx"
 }'
+echo
+echo
+
+# Install chaincode 
+
+echo "POST Install chaincode on Org1"
+echo
+curl -s -X POST \
+  http://localhost:4000/chaincodes \
+  -H "authorization: Bearer $ORG1_TOKEN" \
+  -H "content-type: application/json" \
+  -d "{
+	\"peers\": [\"peer0.org1.example.com\",\"peer1.org1.example.com\"],
+	\"chaincodeName\":\"mycc\",
+	\"chaincodePath\":\"$CC_SRC_PATH\",
+	\"chaincodeType\": \"$LANGUAGE\",
+	\"chaincodeVersion\":\"v0\"
+}"
+echo
+echo
+
+echo "POST Install chaincode on Org2"
+echo
+curl -s -X POST \
+  http://localhost:4000/chaincodes \
+  -H "authorization: Bearer $ORG2_TOKEN" \
+  -H "content-type: application/json" \
+  -d "{
+	\"peers\": [\"peer0.org2.example.com\",\"peer1.org2.example.com\"],
+	\"chaincodeName\":\"mycc\",
+	\"chaincodePath\":\"$CC_SRC_PATH\",
+	\"chaincodeType\": \"$LANGUAGE\",
+	\"chaincodeVersion\":\"v0\"
+}"
+echo
+echo
+
+echo "POST Install chaincode on Org3"
+echo
+curl -s -X POST \
+  http://localhost:4000/chaincodes \
+  -H "authorization: Bearer $ORG3_TOKEN" \
+  -H "content-type: application/json" \
+  -d "{
+	\"peers\": [\"peer0.org3.example.com\",\"peer1.org3.example.com\"],
+	\"chaincodeName\":\"mycc\",
+	\"chaincodePath\":\"$CC_SRC_PATH\",
+	\"chaincodeType\": \"$LANGUAGE\",
+	\"chaincodeVersion\":\"v0\"
+}"
 echo
 echo
 
