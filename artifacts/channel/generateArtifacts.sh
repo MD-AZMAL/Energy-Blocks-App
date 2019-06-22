@@ -36,7 +36,7 @@ echo "##########################################################"
 echo "#########  Generating Orderer Genesis block ##############"
 echo "##########################################################"
 set -x 
-configtxgen -profile $GenesisOrgName -channelID $ChannelName -outputBlock ./genesis.block
+configtxgen -profile $GenesisOrgName -outputBlock ./genesis.block
 res=$?
 set +x
 
