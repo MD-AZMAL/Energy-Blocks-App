@@ -10,3 +10,4 @@ node_modules/
 fabric-client-kv-org1/
 fabric-client-kv-org2/
 fabric-client-kv-org3/
+package-lock.json
