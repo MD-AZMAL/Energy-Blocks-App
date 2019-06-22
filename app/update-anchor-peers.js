@@ -6,14 +6,14 @@ var path = require('path');
 var helper = require('./helper.js');
 var logger = helper.getLogger('update-anchor-peers');
 
-var updateAnchorPeers = async function(channelName, configUpdatePath, username, org_name) {
+var updateAnchorPeers = async function (channelName, configUpdatePath, username, org_name) {
 	logger.debug('\n====== Updating Anchor Peers on \'' + channelName + '\' ======\n');
 	var error_message = null;
 	try {
 		var client = await helper.getClientForOrg(org_name, username);
 		logger.debug('Successfully got the fabric client for the organization "%s"', org_name);
 		var channel = client.getChannel(channelName);
-		if(!channel) {
+		if (!channel) {
 			let message = util.format('Channel %s was not defined in the connection profile', channelName);
 			logger.error(message);
 			throw new Error(message);
@@ -29,12 +29,12 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 			config: channelConfig,
 			signatures: [signature],
 			name: channelName,
-			txId: client.newTransactionID(true) 
+			txId: client.newTransactionID(true)
 		};
 
 		var promises = [];
 		let event_hubs = channel.getChannelEventHubsForOrg();
-		logger.debug('found %s eventhubs for this organization %s',event_hubs.length, org_name);
+		logger.debug('found %s eventhubs for this organization %s', event_hubs.length, org_name);
 		event_hubs.forEach((eh) => {
 			let anchorUpdateEventPromise = new Promise((resolve, reject) => {
 				logger.debug('anchorUpdateEventPromise - setting up event');
@@ -44,7 +44,7 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 					eh.disconnect();
 				}, 60000);
 				eh.registerBlockEvent((block) => {
-					logger.info('The config update has been committed on peer %s',eh.getPeerAddr());
+					logger.info('The config update has been committed on peer %s', eh.getPeerAddr());
 					clearTimeout(event_timeout);
 					resolve();
 				}, (err) => {
@@ -53,7 +53,7 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 					reject(err);
 				},
 
-					{unregister: true, disconnect: true}
+					{ unregister: true, disconnect: true }
 				);
 				eh.connect();
 			});
@@ -65,7 +65,7 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 		promises.push(sendPromise);
 		let results = await Promise.all(promises);
 		logger.debug(util.format('------->>> R E S P O N S E : %j', results));
-		let response = results.pop(); 
+		let response = results.pop();
 
 		if (response) {
 			if (response.status === 'SUCCESS') {
@@ -79,7 +79,7 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 			logger.error(error_message);
 		}
 	} catch (error) {
-		logger.error('Failed to update anchor peers due to error: ' + error.stack ? error.stack :	error);
+		logger.error('Failed to update anchor peers due to error: ' + error.stack ? error.stack : error);
 		error_message = error.toString();
 	}
 
@@ -94,7 +94,7 @@ var updateAnchorPeers = async function(channelName, configUpdatePath, username, 
 		};
 		return response;
 	} else {
-		let message = util.format('Failed to update anchor peers. cause:%s',error_message);
+		let message = util.format('Failed to update anchor peers. cause:%s', error_message);
 		logger.error(message);
 		const response = {
 			success: false,

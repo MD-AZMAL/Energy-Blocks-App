@@ -4,7 +4,7 @@ var path = require('path');
 var helper = require('./helper.js');
 var logger = helper.getLogger('Create-Channel');
 
-var createChannel = async function(channelName, channelConfigPath, username, orgName) {
+var createChannel = async function (channelName, channelConfigPath, username, orgName) {
 	logger.debug('\n====== Creating Channel \'' + channelName + '\' ======\n');
 	try {
 		var client = await helper.getClientForOrg(orgName);
@@ -50,7 +50,7 @@ var createChannel = async function(channelName, channelConfigPath, username, org
 			return response;
 		}
 	} catch (err) {
-		logger.error('Failed to initialize the channel: ' + err.stack ? err.stack :	err);
+		logger.error('Failed to initialize the channel: ' + err.stack ? err.stack : err);
 		throw new Error('Failed to initialize the channel: ' + err.toString());
 	}
 };

@@ -3,7 +3,7 @@ var util = require('util');
 var helper = require('./helper.js');
 var logger = helper.getLogger('install-chaincode');
 
-var installChaincode = async function(peers, chaincodeName, chaincodePath,
+var installChaincode = async function (peers, chaincodeName, chaincodePath,
 	chaincodeVersion, chaincodeType, username, org_name) {
 	logger.debug('\n\n============ Install chaincode on organizations ============\n');
 	helper.setupChaincodeDeploy();
@@ -37,7 +37,7 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 				logger.error(error_message);
 			}
 		}
-	} catch(error) {
+	} catch (error) {
 		logger.error('Failed to install due to error: ' + error.stack ? error.stack : error);
 		error_message = error.toString();
 	}
@@ -51,7 +51,7 @@ var installChaincode = async function(peers, chaincodeName, chaincodePath,
 		};
 		return response;
 	} else {
-		let message = util.format('Failed to install due to:%s',error_message);
+		let message = util.format('Failed to install due to:%s', error_message);
 		logger.error(message);
 		const response = {
 			success: false,

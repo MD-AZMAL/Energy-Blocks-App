@@ -3,7 +3,7 @@ const util = require('util');
 const helper = require('./helper.js');
 const logger = helper.getLogger('instantiate-chaincode');
 
-const instantiateChaincode = async function(peers, channelName, chaincodeName, chaincodeVersion, functionName, chaincodeType, args, username, org_name) {
+const instantiateChaincode = async function (peers, channelName, chaincodeName, chaincodeVersion, functionName, chaincodeType, args, username, org_name) {
 	logger.debug('\n\n============ Instantiate chaincode on channel ' + channelName +
 		' ============\n');
 	let error_message = null;
@@ -14,16 +14,16 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 		client = await helper.getClientForOrg(org_name, username);
 		logger.debug('Successfully got the fabric client for the organization "%s"', org_name);
 		channel = client.getChannel(channelName);
-		if(!channel) {
+		if (!channel) {
 			let message = util.format('Channel %s was not defined in the connection profile', channelName);
 			logger.error(message);
 			throw new Error(message);
 		}
-		const tx_id = client.newTransactionID(true); 
+		const tx_id = client.newTransactionID(true);
 		const deployId = tx_id.getTransactionID();
 
 		const request = {
-			targets : peers,
+			targets: peers,
 			chaincodeId: chaincodeName,
 			chaincodeType: chaincodeType,
 			chaincodeVersion: chaincodeVersion,
@@ -31,15 +31,15 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 			txId: tx_id,
 
 			'endorsement-policy': {
-			        identities: [
-					{ role: { name: 'member', mspId: 'Org1MSP' }},
-					{ role: { name: 'member', mspId: 'Org2MSP' }},
-					{ role: { name: 'member', mspId: 'Org3MSP' }}
-			        ],
-			        policy: {
-					'2-of':[{ 'signed-by': 0 }, { 'signed-by': 2 }]
-			        }
-		        }
+				identities: [
+					{ role: { name: 'member', mspId: 'Org1MSP' } },
+					{ role: { name: 'member', mspId: 'Org2MSP' } },
+					{ role: { name: 'member', mspId: 'Org3MSP' } }
+				],
+				policy: {
+					'2-of': [{ 'signed-by': 0 }, { 'signed-by': 1 }]
+				}
+			}
 		};
 
 		if (functionName)
@@ -75,7 +75,7 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 
 			const promises = [];
 			const event_hubs = channel.getChannelEventHubsForOrg();
-			logger.debug('found %s eventhubs for this organization %s',event_hubs.length, org_name);
+			logger.debug('found %s eventhubs for this organization %s', event_hubs.length, org_name);
 			event_hubs.forEach((eh) => {
 				let instantiateEventPromise = new Promise((resolve, reject) => {
 					logger.debug('instantiateEventPromise - setting up event');
@@ -85,12 +85,12 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 						eh.disconnect();
 					}, 60000);
 					eh.registerTxEvent(deployId, (tx, code, block_num) => {
-						logger.info('The chaincode instantiate transaction has been committed on peer %s',eh.getPeerAddr());
+						logger.info('The chaincode instantiate transaction has been committed on peer %s', eh.getPeerAddr());
 						logger.info('Transaction %s has status of %s in blocl %s', tx, code, block_num);
 						clearTimeout(event_timeout);
 
 						if (code !== 'VALID') {
-							let message = util.format('The chaincode instantiate transaction was invalid, code:%s',code);
+							let message = util.format('The chaincode instantiate transaction was invalid, code:%s', code);
 							logger.error(message);
 							reject(new Error(message));
 						} else {
@@ -103,7 +103,7 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 						logger.error(err);
 						reject(err);
 					},
-						{unregister: true, disconnect: true}
+						{ unregister: true, disconnect: true }
 					);
 					eh.connect();
 				});
@@ -112,10 +112,10 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 
 			const orderer_request = {
 				txId: tx_id, // must include the transaction id so that the outbound
-							// transaction to the orderer will be signed by the admin id
-							// the same as the proposal above, notice that transactionID
-							// generated above was based on the admin id not the current
-							// user assigned to the 'client' instance.
+				// transaction to the orderer will be signed by the admin id
+				// the same as the proposal above, notice that transactionID
+				// generated above was based on the admin id not the current
+				// user assigned to the 'client' instance.
 				proposalResponses: proposalResponses,
 				proposal: proposal
 			};
@@ -124,22 +124,22 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 			promises.push(sendPromise);
 			const results = await Promise.all(promises);
 			logger.debug(util.format('------->>> R E S P O N S E : %j', results));
-			const response = results.pop(); 
+			const response = results.pop();
 			if (response.status === 'SUCCESS') {
 				logger.info('Successfully sent transaction to the orderer.');
 			} else {
-				error_message = util.format('Failed to order the transaction. Error code: %s',response.status);
+				error_message = util.format('Failed to order the transaction. Error code: %s', response.status);
 				logger.debug(error_message);
 			}
 
-			for(const i in results) {
+			for (const i in results) {
 				const event_hub_result = results[i];
 				const event_hub = event_hubs[i];
-				logger.debug('Event results for event hub :%s',event_hub.getPeerAddr());
-				if(typeof event_hub_result === 'string') {
+				logger.debug('Event results for event hub :%s', event_hub.getPeerAddr());
+				if (typeof event_hub_result === 'string') {
 					logger.debug(event_hub_result);
 				} else {
-					if(!error_message) error_message = event_hub_result.toString();
+					if (!error_message) error_message = event_hub_result.toString();
 					logger.debug(event_hub_result.toString());
 				}
 			}
@@ -156,7 +156,7 @@ const instantiateChaincode = async function(peers, channelName, chaincodeName, c
 	let success = true;
 	let message = util.format('Successfully instantiate chaincode in organization %s to the channel \'%s\'', org_name, channelName);
 	if (error_message) {
-		message = util.format('Failed to instantiate the chaincode. cause:%s',error_message);
+		message = util.format('Failed to instantiate the chaincode. cause:%s', error_message);
 		success = false;
 		logger.error(message);
 	} else {

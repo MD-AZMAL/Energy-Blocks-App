@@ -11,19 +11,19 @@ hfc.setLogger(logger);
 
 
 
-async function getClientForOrg (userorg, username) {
+async function getClientForOrg(userorg, username) {
 	logger.debug('getClientForOrg - ****** START %s %s', userorg, username)
 	let config = '-connection-profile-path';
 
-	let client = hfc.loadFromConfig(hfc.getConfigSetting('network'+config));
+	let client = hfc.loadFromConfig(hfc.getConfigSetting('network' + config));
 
-	client.loadFromConfig(hfc.getConfigSetting(userorg+config));
+	client.loadFromConfig(hfc.getConfigSetting(userorg + config));
 
 	await client.initCredentialStores();
 
-	if(username) {
+	if (username) {
 		let user = await client.getUserContext(username, true);
-		if(!user) {
+		if (!user) {
 			throw new Error(util.format('User was not found :', username));
 		} else {
 			logger.debug('User %s was found to be registered and enrolled', username);
@@ -109,11 +109,11 @@ var getRegisteredUser = async function (username, userOrg, isJson) {
 };
 
 
-var setupChaincodeDeploy = function() {
+var setupChaincodeDeploy = function () {
 	process.env.GOPATH = path.join(__dirname, hfc.getConfigSetting('CC_SRC_PATH'));
 };
 
-var getLogger = function(moduleName) {
+var getLogger = function (moduleName) {
 	var logger = log4js.getLogger(moduleName);
 	logger.setLevel('DEBUG');
 	return logger;
