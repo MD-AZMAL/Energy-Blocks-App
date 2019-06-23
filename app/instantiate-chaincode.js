@@ -83,7 +83,7 @@ const instantiateChaincode = async function (peers, channelName, chaincodeName, 
 						let message = 'REQUEST_TIMEOUT:' + eh.getPeerAddr();
 						logger.error(message);
 						eh.disconnect();
-					}, 60000);
+					}, 300000);
 					eh.registerTxEvent(deployId, (tx, code, block_num) => {
 						logger.info('The chaincode instantiate transaction has been committed on peer %s', eh.getPeerAddr());
 						logger.info('Transaction %s has status of %s in blocl %s', tx, code, block_num);

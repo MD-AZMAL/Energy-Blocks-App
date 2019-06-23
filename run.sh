@@ -4,12 +4,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-pushd ./artifacts/channel
-./generateArtifacts.sh
-popd
+./artifacts/channel/generateArtifacts.sh
 
-pushd ./artifacts
-./runContainers.sh
-popd
+./artifacts/channel/runContainers.sh
 
 PORT=4000 node app
