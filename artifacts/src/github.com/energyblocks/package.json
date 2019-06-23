@@ -1,0 +1,15 @@
+{
+  "name": "energyblocks",
+  "version": "1.0.0",
+  "description": "chaincode for frequency based energy billing system in node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engine-strict": true,
+  "author": "shubhsherl",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fabric-shim": "^1.4.1"
+  }
+}

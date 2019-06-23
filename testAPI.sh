@@ -8,7 +8,7 @@ echo
 
 # variables for cc
 
-CC_SRC_PATH="$PWD/artifacts/src/github.com/example_cc/node"
+CC_SRC_PATH="$PWD/artifacts/src/github.com/energyblocks"
 LANGUAGE="node"
 
 # Enroll users in 3 ORGs
