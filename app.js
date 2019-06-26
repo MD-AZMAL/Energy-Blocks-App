@@ -138,6 +138,29 @@ app.post('/users', async function(req, res) {
 	}
 
 });
+// validate a user token
+app.post('/validate', async function(req, res) {
+	var username = req.body.username;
+	var orgName = req.body.orgName;
+	var token = req.body.token;
+	logger.debug('End point : /validate');
+	if (!username) {
+		res.json(getErrorMessage('\'username\''));
+		return;
+	}
+	if (!orgName) {
+		res.json(getErrorMessage('\'orgName\''));
+		return;
+	}
+	if (!token) {
+		res.json(getErrorMessage('\'token\''));
+		return;
+	}
+//  if reached here => token is valid
+	logger.debug('Token is valid');
+	res.json({success: true, token: token});
+
+});
 // Create Channel
 app.post('/channels', async function(req, res) {
 	logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');

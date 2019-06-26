@@ -27,8 +27,7 @@ var queryChaincode = async function (peer, channelName, chaincodeName, args, fcn
 				logger.info(args[0] + ' now has ' + response_payloads[i].toString('utf8') +
 					' after the move');
 			}
-			return args[0] + ' now has ' + response_payloads[0].toString('utf8') +
-				' after the move';
+			return response_payloads[0].toString('utf8');
 		} else {
 			logger.error('response_payloads is null');
 			return 'response_payloads is null';
