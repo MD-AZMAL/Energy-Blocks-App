@@ -64,7 +64,82 @@ let Chaincode = class {
   // getBill based on frequecy and unit of consumption
   // ===================================================
   getPrice(freq, unit) {
-    return parseFloat((unit * (5 - (50-freq)*0.8)).toFixed(3));
+    let price;
+    // base price in Rs/unit
+    const base = 6.2;
+    switch(true) {
+      case (freq>=49.88 && freq<49.89):
+        price = 8;
+      break;
+      case (freq>=49.85 && freq<49.86):
+        price = 7.5+(1/16)*base;
+      break;
+      case (freq>=49.86 && freq<49.87):
+        price = 7+(2/16)*base;
+      break;
+      case (freq>=49.87 && freq<49.88):
+        price = 6.5+(3/16)*base;
+      break;
+      case (freq>=49.88 && freq<49.89):
+        price = 6+(4/16)*base;
+      break;
+      case (freq>=49.89 && freq<49.90):
+        price = 5.5+(5/16)*base;
+      break;
+      case (freq>=49.90 && freq<49.91):
+        price = 5+(6/16)*base;
+      break;
+      case (freq>=49.91 && freq<49.92):
+        price = 4.5+(7/16)*base;
+      break;
+      case (freq>=49.92 && freq<49.93):
+        price = 4+(8/16)*base;
+      break;
+      case (freq>=49.93 && freq<49.94):
+        price = 3.5+(9/16)*base;
+      break;
+      case (freq>=49.94 && freq<49.95):
+        price = 3+(10/16)*base;
+      break;
+      case (freq>=49.95 && freq<49.96):
+        price = 2.5+(11/16)*base;
+      break;
+      case (freq>=49.96 && freq<49.97):
+        price = 2+(12/16)*base;
+      break;
+      case (freq>=49.97 && freq<49.98):
+        price = 1.5+(13/16)*base;
+      break;
+      case (freq>=49.98 && freq<49.99):
+        price = 1+(14/16)*base;
+      break;
+      case (freq>=49.99 && freq<50.00):
+        price = 0.5+(15/16)*base;
+      break;
+      case (freq>=50.00 && freq<50.01):
+        price = base;
+      break;
+      case (freq>=50.01 && freq<50.02):
+        price = 4/5*base;
+      break;
+      case (freq>=50.02 && freq<50.03):
+        price = 3/5*base;
+      break;
+      case (freq>=50.03 && freq<50.04):
+        price = 2/5*base;
+      break;
+      case (freq>=50.04 && freq<50.05):
+        price = 1/5*base;
+      break;
+      case (freq>=50.05):
+        price = 0;
+      break;
+      default:
+        price=8;
+      break;
+    }
+    price = price*unit;
+    return parseFloat(price.toFixed(3));
   }
 
   // ===============================================

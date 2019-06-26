@@ -45,7 +45,7 @@ const instantiateChaincode = async function (peers, channelName, chaincodeName, 
 		if (functionName)
 			request.fcn = functionName;
 
-		let results = await channel.sendInstantiateProposal(request, 1000000); //instantiate takes much longer
+		let results = await channel.sendInstantiateProposal(request, 2000000); //instantiate takes much longer
 
 		const proposalResponses = results[0];
 		const proposal = results[1];
@@ -83,7 +83,7 @@ const instantiateChaincode = async function (peers, channelName, chaincodeName, 
 						let message = 'REQUEST_TIMEOUT:' + eh.getPeerAddr();
 						logger.error(message);
 						eh.disconnect();
-					}, 1000000);
+					}, 2000000);
 					eh.registerTxEvent(deployId, (tx, code, block_num) => {
 						logger.info('The chaincode instantiate transaction has been committed on peer %s', eh.getPeerAddr());
 						logger.info('Transaction %s has status of %s in blocl %s', tx, code, block_num);
