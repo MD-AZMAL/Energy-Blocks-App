@@ -4,6 +4,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+# In case of timeout error while creating containers
+COMPOSE_HTTP_TIMEOUT=120
+
 pushd ./artifacts/channel/
 
 ./generateArtifacts.sh

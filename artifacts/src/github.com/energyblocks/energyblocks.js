@@ -470,7 +470,7 @@ let Chaincode = class {
 
     // delete the index
     let indexName = 'F~startTime~endTime'
-    let startTimeaEndTimeIndexKey = await stub.createCompositeKey(indexName, [freqJSON.startTime, freqJSON.endTime]);
+    let startTimeaEndTimeIndexKey = await stub.createCompositeKey(indexName, [`${freqJSON.startTime}`, `${freqJSON.endTime}`]);
     if (!startTimeaEndTimeIndexKey) {
       throw new Error(' Failed to create the createCompositeKey');
     }
