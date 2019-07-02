@@ -59,8 +59,8 @@ ADMIN_KEY=$(ls $FABRIC_PATH/artifacts/channel/crypto-config/peerOrganizations/or
 
 cp ./app/platform/fabric/connection-profile/balance-transfer-bk.json ./app/platform/fabric/connection-profile/balance-transfer.json
 
-sed -i "s/FABRIC_PATH/${FABRIC_PATH}/g" ./app/platform/fabric/connection-profile/balance-transfer.json
-
+sed -i "s/<path>/${FABRIC_PATH}/g" ./app/platform/fabric/connection-profile/balance-transfer.json
+# <path> to this repo e.g. /home/user/Energy-Blocks-App, then <path> = \/home\/user\/Energy-Blocks-App
 sed -i "s/ADMIN_KEY/${ADMIN_KEY}/g" ./app/platform/fabric/connection-profile/balance-transfer.json
 
 ```
