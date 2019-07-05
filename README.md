@@ -81,3 +81,8 @@ testAPI.sh                        | Script to enroll users in org and install ch
 frontend/src/config.js         |  Configurations of users enrolled in Organizations
 frontend/src/config-bk.js      | Backup file for config to be used to replace user token in `testAPI.sh`
 
+## Resource 
+
+* You can refer to the project report attached with this report.
+* Energy Blocks test run can be found [here](https://www.youtube.com/watch?v=B0YDjU0LbOI&t=30s). 
+
